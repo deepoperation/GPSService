@@ -65,8 +65,10 @@ public class GPSServerThread extends Thread {
 			OutputStream out=socket.getOutputStream();
 			byte[] w=message.getBytes("Shift_JIS");
 			for(int i = 0; i < w.length; i++) {
-				if(w[i] == '?') {
-					w[i] = '-';
+				if(i > 0) {
+					if(w[i] == '?') {
+						w[i] = '-';
+					}
 				}
 			}
 			out.write(w);
