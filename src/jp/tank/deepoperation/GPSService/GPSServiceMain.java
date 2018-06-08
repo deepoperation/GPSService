@@ -25,7 +25,7 @@ import android.widget.Toast;
 public class GPSServiceMain extends Service implements LocationListener {
 	private LocationManager		lm;			// ロケーションマネージャ
 	Handler  handler = new Handler();
-	
+
 
 	@Override
 	public IBinder onBind(Intent arg0) {
@@ -34,8 +34,8 @@ public class GPSServiceMain extends Service implements LocationListener {
 
 	// 開始時「onStart」メソッド
 	@Override
-	public void onStart(Intent intent, int startID) {
-		super.onStart(intent, startID);
+	public int onStartCommand(Intent intent, int flag, int startID) {
+		super.onStartCommand(intent, flag, startID);
 
 		//開始時にトーストを表示
 		Toast.makeText(this, "GPSサービスを開始しました！", Toast.LENGTH_SHORT).show();
@@ -80,6 +80,7 @@ public class GPSServiceMain extends Service implements LocationListener {
 			}
 		};
 		t.start();
+		return START_REDELIVER_INTENT;
 	}
 
 	// 終了時「onDestroy」メソッド
@@ -112,7 +113,7 @@ public class GPSServiceMain extends Service implements LocationListener {
 				}
 			}
 		} catch (IOException e) {
-			
+
 		}
 		GPSServerThread.sendMessageAll(latitude + "," + longitude + "," + buff + "\n");
 	}
